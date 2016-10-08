@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <ListPreference
+        android:defaultValue="EN"
+        android:entries="@array/languages"
+        android:entryValues="@array/languages_short"
+        android:key="language"
+        android:summary="%s"
+        android:title="@string/start_settings_language" />
+
+    <ListPreference
+        android:defaultValue="EUR"
+        android:entries="@array/currency"
+        android:entryValues="@array/currency_short"
+        android:key="currency"
+        android:summary="%s"
+        android:title="@string/start_settings_currency" />
+
+
+
+</PreferenceScreen>

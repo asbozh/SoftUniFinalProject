@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="languages">
+        <item>English</item>
+        <item>Български</item>
+    </string-array>
+
+    <string-array name="languages_short">
+        <item>EN</item>
+        <item>BG</item>
+    </string-array>
+
+    <string-array name="currency">
+        <item>Euros €</item>
+        <item>Dollars $</item>
+        <item>Pounds £</item>
+        <item>Levas лв.</item>
+    </string-array>
+
+    <string-array name="currency_short">
+        <item>EUR</item>
+        <item>USD</item>
+        <item>GBP</item>
+        <item>BGN</item>
+    </string-array>
+
+</resources>
