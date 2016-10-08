@@ -17,4 +17,6 @@
     <string name="start_settings_currency">Currency</string>
     <string name="fab_menu_expense">Expense</string>
     <string name="fab_menu_income">Income</string>
+    <string name="add_income_entry">Add Income Entry</string>
+    <string name="add_expense_entry">Add Expense Entry</string>
 </resources>

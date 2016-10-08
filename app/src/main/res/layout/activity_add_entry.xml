@@ -1,0 +1,196 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.asbozh.softuni.finalproject.activities.AddEntryActivity">
+    <include
+        android:id="@+id/tool_bar"
+        layout="@layout/tool_bar" />
+
+    <RelativeLayout
+        android:layout_below="@+id/tool_bar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true">
+
+
+        <TextView
+            android:text="Date:"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginEnd="8dp"
+            android:id="@+id/tvDateLabel" />
+
+        <TextView
+            android:text="08/10/2016"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/tvDateLabel"
+            android:layout_alignBottom="@+id/tvDateLabel"
+            android:id="@+id/tvDateEntry" />
+
+        <ImageButton
+            android:id="@+id/ibCalendarPicker"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_toEndOf="@+id/tvDateEntry"
+            android:layout_alignBottom="@+id/tvDateEntry"
+            android:layout_marginStart="8dp"
+            android:src="@drawable/ic_date_range_black_24dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/tvAmountLabel"
+            android:layout_below="@+id/tvDateLabel"
+            android:text="Amount:"
+            android:layout_marginEnd="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:id="@+id/etAmount"
+            android:layout_toEndOf="@+id/tvAmountLabel"
+            android:layout_alignBottom="@+id/tvAmountLabel"
+            android:inputType="numberDecimal"
+            android:ems="10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <Spinner
+            android:id="@+id/spinnerCur"
+            android:layout_toEndOf="@+id/etAmount"
+            android:layout_alignBottom="@+id/etAmount"
+            android:layout_marginStart="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+        </Spinner>
+
+        <TextView
+            android:id="@+id/tvCategoryLabel"
+            android:layout_below="@+id/tvAmountLabel"
+            android:text="Category:"
+            android:layout_marginEnd="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <Spinner
+            android:id="@+id/spinnerCat"
+            android:layout_toEndOf="@+id/tvCategoryLabel"
+            android:layout_alignBottom="@+id/tvCategoryLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+        </Spinner>
+
+        <ImageButton
+            android:id="@+id/ibAddCategory"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_toEndOf="@+id/spinnerCat"
+            android:layout_alignBottom="@+id/spinnerCat"
+            android:layout_marginStart="8dp"
+            android:src="@drawable/ic_add_circle_outline_black_24dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/tvTitleLabel"
+            android:layout_below="@+id/tvCategoryLabel"
+            android:text="Title:"
+            android:layout_marginEnd="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:id="@+id/etEntryTitle"
+            android:layout_toEndOf="@+id/tvTitleLabel"
+            android:layout_alignBottom="@+id/tvTitleLabel"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/tvDetailsLabel"
+            android:layout_below="@+id/tvTitleLabel"
+            android:text="More Details:"
+            android:layout_marginEnd="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:id="@+id/etEntryDetails"
+            android:layout_toEndOf="@+id/tvDetailsLabel"
+            android:layout_alignBottom="@+id/tvDetailsLabel"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <ImageView
+            android:id="@+id/ivEntryPic"
+            android:layout_below="@+id/tvDetailsLabel"
+            android:layout_marginEnd="8dp"
+            android:src="@mipmap/ic_launcher"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/bCapturePic"
+            android:layout_toEndOf="@+id/ivEntryPic"
+            android:layout_alignBottom="@+id/ivEntryPic"
+            style="@style/Widget.AppCompat.Button.Borderless.Colored"
+            android:text="Capture"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/bChoosePic"
+            android:layout_toEndOf="@+id/bCapturePic"
+            android:layout_alignBottom="@+id/bCapturePic"
+            android:layout_marginStart="8dp"
+            style="@style/Widget.AppCompat.Button.Borderless.Colored"
+            android:text="Choose"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <CheckBox
+            android:id="@+id/cbLocation"
+            android:layout_below="@id/ivEntryPic"
+            android:layout_marginEnd="8dp"
+            android:checked="false"
+            android:text="Location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:id="@+id/etLocation"
+            android:layout_toEndOf="@+id/cbLocation"
+            android:layout_alignBottom="@+id/cbLocation"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/bAddEntry"
+            android:text="Add"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <Button
+            android:id="@+id/bCancelEntry"
+            android:text="Cancel"
+            style="@style/Widget.AppCompat.Button.Borderless.Colored"
+            android:layout_toStartOf="@+id/bAddEntry"
+            android:layout_alignBottom="@+id/bAddEntry"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+
+
+</RelativeLayout>
