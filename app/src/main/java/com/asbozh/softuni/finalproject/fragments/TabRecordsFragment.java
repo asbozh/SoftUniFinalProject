@@ -9,10 +9,17 @@ import android.view.ViewGroup;
 import com.asbozh.softuni.finalproject.R;
 
 
-public class StatisticsFragment extends Fragment {
+
+public class TabRecordsFragment extends Fragment {
+
+
+    public TabRecordsFragment() {
+
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_statistics, container, false);
+        return inflater.inflate(R.layout.fragment_tab_records, container, false);
     }
+
 }
