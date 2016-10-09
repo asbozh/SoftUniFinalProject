@@ -20,9 +20,9 @@ public class AddEntryActivity extends AppCompatActivity {
         initToolbar();
         entryType = getIntent().getStringExtra("TYPE_KEY");
         if (entryType.equalsIgnoreCase("INCOME")) {
-            mToolbar.setTitle(R.string.add_income_entry);
+            getSupportActionBar().setTitle(R.string.add_income_entry);
         } else if (entryType.equalsIgnoreCase("EXPENSE")) {
-            mToolbar.setTitle(R.string.add_expense_entry);
+            getSupportActionBar().setTitle(R.string.add_expense_entry);
         }
     }
 

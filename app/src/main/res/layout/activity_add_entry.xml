@@ -8,59 +8,39 @@
         layout="@layout/tool_bar" />
 
     <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
         android:layout_below="@+id/tool_bar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true">
-
-
-        <TextView
-            android:text="Date:"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginEnd="8dp"
-            android:id="@+id/tvDateLabel" />
-
-        <TextView
-            android:text="08/10/2016"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toEndOf="@+id/tvDateLabel"
-            android:layout_alignBottom="@+id/tvDateLabel"
-            android:id="@+id/tvDateEntry" />
-
-        <ImageButton
-            android:id="@+id/ibCalendarPicker"
-            style="@style/Widget.AppCompat.Button.Borderless"
-            android:layout_toEndOf="@+id/tvDateEntry"
-            android:layout_alignBottom="@+id/tvDateEntry"
-            android:layout_marginStart="8dp"
-            android:src="@drawable/ic_date_range_black_24dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+        android:layout_height="match_parent">
 
         <TextView
             android:id="@+id/tvAmountLabel"
-            android:layout_below="@+id/tvDateLabel"
-            android:text="Amount:"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true"
+            android:text="@string/add_label_amount"
+            android:gravity="center_vertical"
             android:layout_marginEnd="8dp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/etAmount" />
 
         <EditText
             android:id="@+id/etAmount"
-            android:layout_toEndOf="@+id/tvAmountLabel"
-            android:layout_alignBottom="@+id/tvAmountLabel"
+            android:text="100"
             android:inputType="numberDecimal"
             android:ems="10"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:minWidth="100dp"
+            android:layout_height="50dp"
+            android:layout_alignParentTop="true"
+            android:layout_toEndOf="@+id/tvAmountLabel" />
 
         <Spinner
             android:id="@+id/spinnerCur"
+            android:layout_alignParentTop="true"
             android:layout_toEndOf="@+id/etAmount"
             android:layout_alignBottom="@+id/etAmount"
             android:layout_marginStart="8dp"
@@ -69,44 +49,82 @@
         </Spinner>
 
         <TextView
-            android:id="@+id/tvCategoryLabel"
-            android:layout_below="@+id/tvAmountLabel"
-            android:text="Category:"
-            android:layout_marginEnd="8dp"
+            android:text="@string/add_label_date"
+            android:gravity="center_vertical"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="50dp"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/tvAmountLabel"
+            android:id="@+id/tvDateLabel"
+            android:layout_marginEnd="8dp" />
+
+        <TextView
+            android:gravity="center_vertical"
+            android:text="08/10/2016"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvDateEntry"
+            android:layout_marginEnd="8dp"
+            android:layout_alignBottom="@+id/tvDateLabel"
+            android:layout_alignTop="@+id/tvDateLabel"
+            android:layout_toEndOf="@+id/tvDateLabel"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
+
+        <ImageButton
+            android:id="@+id/ibCalendarPicker"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:src="@drawable/ic_date_range_black_24dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignTop="@+id/tvDateEntry"
+            android:layout_toEndOf="@+id/tvDateEntry" />
+
+        <TextView
+            android:id="@+id/tvCategoryLabel"
+            android:layout_below="@+id/tvDateLabel"
+            android:text="@string/add_label_category"
+            android:layout_marginEnd="8dp"
+            android:gravity="center_vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"/>
 
         <Spinner
             android:id="@+id/spinnerCat"
-            android:layout_toEndOf="@+id/tvCategoryLabel"
-            android:layout_alignBottom="@+id/tvCategoryLabel"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="50dp"
+            android:layout_marginEnd="8dp"
+            android:layout_alignBottom="@+id/tvCategoryLabel"
+            android:layout_toEndOf="@+id/tvCategoryLabel">
         </Spinner>
 
         <ImageButton
             android:id="@+id/ibAddCategory"
             style="@style/Widget.AppCompat.Button.Borderless"
-            android:layout_toEndOf="@+id/spinnerCat"
-            android:layout_alignBottom="@+id/spinnerCat"
-            android:layout_marginStart="8dp"
             android:src="@drawable/ic_add_circle_outline_black_24dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignBottom="@+id/spinnerCat"
+            android:layout_toEndOf="@+id/spinnerCat" />
 
         <TextView
             android:id="@+id/tvTitleLabel"
+            android:gravity="center_vertical"
             android:layout_below="@+id/tvCategoryLabel"
-            android:text="Title:"
+            android:text="@string/add_label_title"
             android:layout_marginEnd="8dp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="50dp" />
 
         <EditText
             android:id="@+id/etEntryTitle"
             android:layout_toEndOf="@+id/tvTitleLabel"
             android:layout_alignBottom="@+id/tvTitleLabel"
+            android:layout_alignTop="@+id/tvTitleLabel"
+            android:text="Income from Salary on 08/10/2016 "
+            android:singleLine="true"
+            android:maxLength="50"
             android:maxLines="1"
+            android:minWidth="100dp"
             android:ellipsize="end"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
@@ -114,34 +132,52 @@
         <TextView
             android:id="@+id/tvDetailsLabel"
             android:layout_below="@+id/tvTitleLabel"
-            android:text="More Details:"
+            android:text="@string/add_label_details"
+            android:gravity="center_vertical"
             android:layout_marginEnd="8dp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="50dp" />
 
         <EditText
             android:id="@+id/etEntryDetails"
             android:layout_toEndOf="@+id/tvDetailsLabel"
             android:layout_alignBottom="@+id/tvDetailsLabel"
+            android:layout_alignTop="@+id/tvDetailsLabel"
+            android:text="Salary from GFK"
+            android:maxLength="100"
+            android:singleLine="true"
+            android:minWidth="100dp"
             android:maxLines="1"
             android:ellipsize="end"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
+        <TextView
+            android:id="@+id/tvPictureLabel"
+            android:text="@string/add_label_picture"
+            android:gravity="center_vertical"
+            android:layout_marginEnd="8dp"
+            android:layout_below="@+id/tvDetailsLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp" />
+
         <ImageView
             android:id="@+id/ivEntryPic"
-            android:layout_below="@+id/tvDetailsLabel"
+            android:layout_toEndOf="@+id/tvPictureLabel"
+            android:layout_alignBottom="@+id/tvPictureLabel"
+            android:layout_alignTop="@+id/tvPictureLabel"
             android:layout_marginEnd="8dp"
             android:src="@mipmap/ic_launcher"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_width="50dp"
+            android:layout_height="50dp" />
 
         <Button
             android:id="@+id/bCapturePic"
             android:layout_toEndOf="@+id/ivEntryPic"
+            android:layout_alignTop="@+id/ivEntryPic"
             android:layout_alignBottom="@+id/ivEntryPic"
             style="@style/Widget.AppCompat.Button.Borderless.Colored"
-            android:text="Capture"
+            android:text="@string/button_capture"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
@@ -149,33 +185,38 @@
             android:id="@+id/bChoosePic"
             android:layout_toEndOf="@+id/bCapturePic"
             android:layout_alignBottom="@+id/bCapturePic"
+            android:layout_alignTop="@+id/bCapturePic"
             android:layout_marginStart="8dp"
             style="@style/Widget.AppCompat.Button.Borderless.Colored"
-            android:text="Choose"
+            android:text="@string/button_choose"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
         <CheckBox
             android:id="@+id/cbLocation"
-            android:layout_below="@id/ivEntryPic"
+            android:layout_below="@id/tvPictureLabel"
             android:layout_marginEnd="8dp"
             android:checked="false"
-            android:text="Location"
+            android:text="@string/checkbox_location"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="50dp" />
 
         <EditText
             android:id="@+id/etLocation"
             android:layout_toEndOf="@+id/cbLocation"
             android:layout_alignBottom="@+id/cbLocation"
+            android:layout_alignTop="@+id/cbLocation"
             android:maxLines="1"
+            android:minWidth="100dp"
             android:ellipsize="end"
+            android:singleLine="true"
+            android:maxLength="50"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
         <Button
             android:id="@+id/bAddEntry"
-            android:text="Add"
+            android:text="@string/button_add_entry"
             style="@style/Widget.AppCompat.Button.Colored"
             android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"
@@ -183,7 +224,7 @@
             android:layout_height="wrap_content" />
         <Button
             android:id="@+id/bCancelEntry"
-            android:text="Cancel"
+            android:text="@string/button_cancel_entry"
             style="@style/Widget.AppCompat.Button.Borderless.Colored"
             android:layout_toStartOf="@+id/bAddEntry"
             android:layout_alignBottom="@+id/bAddEntry"

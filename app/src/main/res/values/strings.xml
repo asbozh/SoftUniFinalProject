@@ -19,4 +19,15 @@
     <string name="fab_menu_income">Income</string>
     <string name="add_income_entry">Add Income Entry</string>
     <string name="add_expense_entry">Add Expense Entry</string>
+    <string name="add_label_amount">Amount</string>
+    <string name="add_label_date">Date</string>
+    <string name="add_label_category">Category</string>
+    <string name="add_label_title">Title</string>
+    <string name="add_label_details">More Details</string>
+    <string name="add_label_picture">Add Picture</string>
+    <string name="button_capture">Capture</string>
+    <string name="button_choose">Choose</string>
+    <string name="checkbox_location">Location</string>
+    <string name="button_add_entry">Add</string>
+    <string name="button_cancel_entry">Cancel</string>
 </resources>
