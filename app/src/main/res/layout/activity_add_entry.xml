@@ -70,15 +70,6 @@
             android:layout_toEndOf="@+id/tvDateLabel"
             android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
 
-        <ImageButton
-            android:id="@+id/ibCalendarPicker"
-            style="@style/Widget.AppCompat.Button.Borderless"
-            android:src="@drawable/ic_date_range_black_24dp"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_alignTop="@+id/tvDateEntry"
-            android:layout_toEndOf="@+id/tvDateEntry" />
-
         <TextView
             android:id="@+id/tvCategoryLabel"
             android:layout_below="@+id/tvDateLabel"
@@ -230,6 +221,15 @@
             android:layout_alignBottom="@+id/bAddEntry"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
+
+        <ImageButton
+            android:id="@+id/ibCalendarPicker"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:src="@drawable/ic_date_range_black_24dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_below="@+id/etAmount"
+            android:layout_toEndOf="@+id/tvDateEntry" />
 
     </RelativeLayout>
 

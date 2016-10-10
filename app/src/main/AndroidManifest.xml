@@ -16,6 +16,15 @@
             </intent-filter>
         </activity>
 
+
+        <activity
+            android:name=".activities.AllRecordsActivity"
+            android:parentActivityName=".activities.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.MainActivity" />
+        </activity>
+
         <activity
             android:name=".activities.AddEntryActivity"
             android:parentActivityName=".activities.MainActivity" >
