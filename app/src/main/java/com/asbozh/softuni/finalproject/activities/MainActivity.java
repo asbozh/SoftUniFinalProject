@@ -152,6 +152,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public void onHomeFragmentInteraction() {
+        mNavigationView.getMenu().findItem(R.id.nav_statistics).setChecked(true);
         navigate(R.id.nav_statistics);
     }
 }

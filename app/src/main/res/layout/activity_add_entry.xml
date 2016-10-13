@@ -203,7 +203,8 @@
             android:singleLine="true"
             android:maxLength="50"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:visibility="invisible" />
 
         <Button
             android:id="@+id/bAddEntry"

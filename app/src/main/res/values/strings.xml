@@ -28,6 +28,7 @@
     <string name="button_capture">Capture</string>
     <string name="button_choose">Choose</string>
     <string name="checkbox_location">Location</string>
+    <string name="location_unknown">Location is unknown</string>
     <string name="button_add_entry">Add</string>
     <string name="button_cancel_entry">Cancel</string>
     <string name="tab_all_label">ALL</string>

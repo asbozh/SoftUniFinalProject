@@ -2,11 +2,17 @@ package com.asbozh.softuni.finalproject.activities;
 
 import android.Manifest;
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -20,11 +26,12 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.asbozh.softuni.finalproject.R;
 
@@ -37,25 +44,32 @@ import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 
-public class AddEntryActivity extends AppCompatActivity implements View.OnClickListener {
+public class AddEntryActivity extends AppCompatActivity implements View.OnClickListener, LocationListener {
 
     static final int REQUEST_IMAGE_CAPTURE = 1;
     static final int REQUEST_IMAGE_CHOOSE = 2;
+    static final int REQUEST_PERMISSION_STORAGE = 3;
+    static final int REQUEST_PERMISSION_LOCATION = 4;
 
     String mCurrentPhotoPath = null;
 
     final Calendar myCalendar = Calendar.getInstance();
     DatePickerDialog.OnDateSetListener date;
 
+    LocationManager mLocationManager;
+
     Toolbar mToolbar;
     String entryType = "unknown";
     TextView tvDateEntry;
+    EditText etLocation;
     ImageButton ibCalendarPicker;
     ImageView ivEntryPic;
     Button btnAdd, btnCancel, btnCapture, btnChoose;
+    CheckBox cbLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,6 +114,7 @@ public class AddEntryActivity extends AppCompatActivity implements View.OnClickL
 
     private void setViews() {
         tvDateEntry = (TextView) findViewById(R.id.tvDateEntry);
+        etLocation = (EditText) findViewById(R.id.etLocation);
         ibCalendarPicker = (ImageButton) findViewById(R.id.ibCalendarPicker);
         ibCalendarPicker.setOnClickListener(this);
         ivEntryPic = (ImageView) findViewById(R.id.ivEntryPic);
@@ -111,6 +126,8 @@ public class AddEntryActivity extends AppCompatActivity implements View.OnClickL
         btnCapture.setOnClickListener(this);
         btnChoose = (Button) findViewById(R.id.bChoosePic);
         btnChoose.setOnClickListener(this);
+        cbLocation = (CheckBox) findViewById(R.id.cbLocation);
+        cbLocation.setOnClickListener(this);
     }
 
     private void initToolbar() {
@@ -165,8 +182,85 @@ public class AddEntryActivity extends AppCompatActivity implements View.OnClickL
                     }
                 }
                 break;
+            case R.id.cbLocation:
+                if (cbLocation.isChecked()) {
+                    if (isLocationPermissionGranted()) {
+                        addUserLocation();
+                    }
+                } else {
+                    etLocation.setVisibility(View.INVISIBLE);
+                }
+
+                break;
         }
     }
+
+    private boolean isLocationPermissionGranted() {
+        if (Build.VERSION.SDK_INT >= 23) {
+            if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION)
+                    == PackageManager.PERMISSION_GRANTED) {
+                return true;
+            } else {
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_PERMISSION_LOCATION);
+                return false;
+            }
+        } else {
+            return true;
+        }
+    }
+
+    private void addUserLocation() {
+        etLocation.setVisibility(View.VISIBLE);
+        mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+        Location location = mLocationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        if (location != null && location.getTime() > Calendar.getInstance().getTimeInMillis() - 2 * 60 * 1000) { // check if the last known location isn't older than 2 minutes
+            addAddress(location.getLatitude(), location.getLongitude());
+        } else {
+            mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
+        }
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+        if (location != null) {
+            addAddress(location.getLatitude(), location.getLongitude());
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                    && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                return;
+            }
+            mLocationManager.removeUpdates(this);
+        }
+    }
+
+    private void addAddress(double latitude, double longitude) {
+        Geocoder geocoder;
+        List<Address> addresses = null;
+        geocoder = new Geocoder(this, Locale.getDefault());
+        try {
+            addresses = geocoder.getFromLocation(latitude, longitude, 1);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        if (addresses.size() > 0) {
+            etLocation.setText(addresses.get(0).getAddressLine(0) + ", " + addresses.get(0).getLocality() + ", " + addresses.get(0).getCountryName());
+        } else {
+            etLocation.setText(getText(R.string.location_unknown));
+        }
+
+    }
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {}
+
+    @Override
+    public void onProviderEnabled(String provider) {}
+
+    @Override
+    public void onProviderDisabled(String provider) {}
 
     private void deleteTempPic() {
         if (mCurrentPhotoPath != null) {
@@ -295,7 +389,7 @@ public class AddEntryActivity extends AppCompatActivity implements View.OnClickL
                     == PackageManager.PERMISSION_GRANTED) {
                 return true;
             } else {
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_PERMISSION_STORAGE);
                 return false;
             }
         }
@@ -307,8 +401,14 @@ public class AddEntryActivity extends AppCompatActivity implements View.OnClickL
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (grantResults[0]== PackageManager.PERMISSION_GRANTED){
+        if (requestCode == REQUEST_PERMISSION_STORAGE && grantResults[0]== PackageManager.PERMISSION_GRANTED){
             dispatchChoosePictureIntent();
+        }
+        if (requestCode == REQUEST_PERMISSION_LOCATION && grantResults[0]== PackageManager.PERMISSION_GRANTED){
+            addUserLocation();
+        } else if (requestCode == REQUEST_PERMISSION_LOCATION && grantResults[0]== PackageManager.PERMISSION_DENIED) {
+            cbLocation.setChecked(false);
+            etLocation.setVisibility(View.INVISIBLE);
         }
     }
 }
