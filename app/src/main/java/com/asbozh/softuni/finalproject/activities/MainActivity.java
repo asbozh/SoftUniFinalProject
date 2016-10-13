@@ -12,13 +12,14 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 
 import com.asbozh.softuni.finalproject.R;
 import com.asbozh.softuni.finalproject.fragments.HomeFragment;
 import com.asbozh.softuni.finalproject.fragments.StatisticsFragment;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, HomeFragment.OnHomeFragmentClickListener {
 
     private static final long DRAWER_CLOSE_DELAY_MS = 250;
     private static final String NAV_ITEM_ID = "navItemId";
@@ -31,7 +32,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private int mNavItemId;
 
     HomeFragment homeFrag;
-    AllRecordsActivity allRecsFrag;
     StatisticsFragment statsFrag;
 
     @Override
@@ -135,7 +135,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         outState.putInt(NAV_ITEM_ID, mNavItemId);
     }
 
-
     @Override
     public void onBackPressed() {
         if(mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
@@ -149,6 +148,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         else {
             super.onBackPressed();
         }
+    }
+
+    @Override
+    public void onHomeFragmentInteraction() {
+        navigate(R.id.nav_statistics);
     }
 }
 
