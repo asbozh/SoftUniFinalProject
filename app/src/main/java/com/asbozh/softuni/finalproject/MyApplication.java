@@ -2,13 +2,11 @@ package com.asbozh.softuni.finalproject;
 
 import android.app.Application;
 import android.content.ContextWrapper;
-import android.util.Log;
 
 import com.asbozh.softuni.finalproject.database.Category;
 import com.asbozh.softuni.finalproject.database.Finances;
 import com.asbozh.softuni.finalproject.database.Record;
 import com.orm.SugarContext;
-import com.orm.SugarDb;
 
 import java.io.File;
 
@@ -66,8 +64,12 @@ public class MyApplication extends Application {
 
         Record rec1 = new Record(food, "Billa", "weekly shopping", "100", "14/10/2016", "", "");
         Record rec2 = new Record(salary, "GFK salary for October", "", "2000", "02/10/2016", "", "");
+        Record rec3 = new Record(salary, "GFK salary for November", "", "2200", "02/11/2016", "", "");
+        Record rec4 = new Record(gift, "Birthday gift", "", "100", "14/06/2016", "", "");
 
         rec1.save();
         rec2.save();
+        rec3.save();
+        rec4.save();
     }
 }

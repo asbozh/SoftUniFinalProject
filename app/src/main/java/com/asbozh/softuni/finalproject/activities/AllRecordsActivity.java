@@ -10,7 +10,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
 import com.asbozh.softuni.finalproject.R;
-import com.asbozh.softuni.finalproject.fragments.TabRecordsFragment;
+import com.asbozh.softuni.finalproject.fragments.TabAllRecordsFragment;
+import com.asbozh.softuni.finalproject.fragments.TabExpenseRecordsFragment;
+import com.asbozh.softuni.finalproject.fragments.TabIncomeRecordsFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,9 +44,9 @@ public class AllRecordsActivity extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new TabRecordsFragment(), getString(R.string.tab_all_label));
-        adapter.addFragment(new TabRecordsFragment(), getString(R.string.tab_income_label));
-        adapter.addFragment(new TabRecordsFragment(), getString(R.string.tab_expenses_label));
+        adapter.addFragment(new TabAllRecordsFragment(), getString(R.string.tab_all_label));
+        adapter.addFragment(new TabIncomeRecordsFragment(), getString(R.string.tab_income_label));
+        adapter.addFragment(new TabExpenseRecordsFragment(), getString(R.string.tab_expenses_label));
         viewPager.setAdapter(adapter);
     }
 

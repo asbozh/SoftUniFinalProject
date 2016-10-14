@@ -7,7 +7,7 @@ import com.orm.SugarRecord;
 
 public class Record extends SugarRecord implements Parcelable {
 
-    private Category categoryName;
+    private Category category;
     private String title;
     private String moreDetails;
     private String amount;
@@ -17,14 +17,22 @@ public class Record extends SugarRecord implements Parcelable {
 
     public Record(){}
 
-    public Record(Category categoryName, String title, String moreDetails, String amount, String date, String location, String image) {
-        this.categoryName = categoryName;
+    public Record(Category category, String title, String moreDetails, String amount, String date, String location, String image) {
+        this.category = category;
         this.setTitle(title);
         this.setMoreDetails(moreDetails);
         this.setAmount(amount);
         this.setDate(date);
         this.setLocation(location);
         this.setImage(image);
+    }
+
+    public String getFinancesTypeOfCategory() {
+        return category.getFinances();
+    }
+
+    public String getCategory() {
+       return category.getCategoryName();
     }
 
     public String getTitle() {
@@ -76,7 +84,7 @@ public class Record extends SugarRecord implements Parcelable {
     }
 
     protected Record(Parcel in) {
-        categoryName = (Category) in.readValue(Category.class.getClassLoader());
+        category = (Category) in.readValue(Category.class.getClassLoader());
         title = in.readString();
         moreDetails = in.readString();
         amount = in.readString();
@@ -92,7 +100,7 @@ public class Record extends SugarRecord implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeValue(categoryName);
+        dest.writeValue(category);
         dest.writeString(title);
         dest.writeString(moreDetails);
         dest.writeString(amount);

@@ -10,20 +10,24 @@ import java.util.List;
 
 public class Category extends SugarRecord implements Parcelable {
 
-    private Finances financesType;
+    private Finances finances;
     private String categoryName;
     private String categoryTotalPrice;
 
     public Category(){}
 
-    public Category(Finances financesType, String categoryName, String categoryTotalPrice) {
-        this.financesType = financesType;
+    public Category(Finances finances, String categoryName, String categoryTotalPrice) {
+        this.finances = finances;
         this.setCategoryName(categoryName);
         this.setCategoryTotalPrice(categoryTotalPrice);
     }
 
     public List<Record> getAllRecords() {
-        return Record.find(Record.class, "record = ?", String.valueOf(getId()));
+        return Record.find(Record.class, "category = ?", String.valueOf(getId()));
+    }
+
+    public String getFinances() {
+        return finances.getFinancesType();
     }
 
     public String getCategoryName() {
@@ -43,7 +47,7 @@ public class Category extends SugarRecord implements Parcelable {
     }
 
     protected Category(Parcel in) {
-        financesType = (Finances) in.readValue(Finances.class.getClassLoader());
+        finances = (Finances) in.readValue(Finances.class.getClassLoader());
         categoryName = in.readString();
         categoryTotalPrice = in.readString();
     }
@@ -55,7 +59,7 @@ public class Category extends SugarRecord implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeValue(financesType);
+        dest.writeValue(finances);
         dest.writeString(categoryName);
         dest.writeString(categoryTotalPrice);
     }
