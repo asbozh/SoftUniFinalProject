@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/tool_bar"
+        layout="@layout/tool_bar" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/activity_horizontal_margin">
+
+
+            <TextView
+                android:id="@+id/tvViewEntryTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:gravity="center"
+                android:text="TITLE"
+                android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
+
+            <TextView
+                android:id="@+id/tvViewEntryMoreDetails"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvViewEntryTitle"
+                android:text="details.."
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+            <TextView
+                android:id="@+id/tvViewEntryCategoryLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/tvViewEntryMoreDetails"
+                android:layout_marginEnd="4dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/add_label_category" />
+
+            <TextView
+                android:id="@+id/tvViewEntryCategory"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/tvViewEntryCategoryLabel"
+                android:layout_toEndOf="@+id/tvViewEntryCategoryLabel"
+                android:text="Salary"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
+
+            <TextView
+                android:id="@+id/tvViewEntryDateLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/tvViewEntryCategoryLabel"
+                android:layout_marginEnd="4dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/add_label_date" />
+
+            <TextView
+                android:id="@+id/tvViewEntryDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/tvViewEntryDateLabel"
+                android:layout_toEndOf="@+id/tvViewEntryDateLabel"
+                android:text="10/20/2016"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
+
+            <TextView
+                android:id="@+id/tvViewEntryAmountLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/tvViewEntryDateLabel"
+                android:layout_marginEnd="4dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/view_label_amount" />
+
+            <TextView
+                android:id="@+id/tvViewEntryAmount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/tvViewEntryAmountLabel"
+                android:layout_marginEnd="4dp"
+                android:layout_toEndOf="@+id/tvViewEntryAmountLabel"
+                android:text="100"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
+
+            <TextView
+                android:id="@+id/tvViewEntryAmountCurrency"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/tvViewEntryAmount"
+                android:layout_toEndOf="@+id/tvViewEntryAmount"
+                android:text="BGN"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
+
+            <TextView
+                android:id="@+id/tvViewEntryLocationLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/tvViewEntryAmountLabel"
+                android:layout_marginEnd="4dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/checkbox_location" />
+
+            <TextView
+                android:id="@+id/tvViewEntryLocation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/tvViewEntryLocationLabel"
+                android:layout_toEndOf="@+id/tvViewEntryLocationLabel"
+                android:text="Sofia, Bulgaria"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
+
+            <ImageView
+                android:id="@+id/ivViewEntryPic"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_below="@+id/tvViewEntryLocationLabel"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="8dp"
+                android:transitionName="picture"
+                android:src="@drawable/ic_insert_photo_black_24dp" />
+        </RelativeLayout>
+
+    </ScrollView>
+</LinearLayout>

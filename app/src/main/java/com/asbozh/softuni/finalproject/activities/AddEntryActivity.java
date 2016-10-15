@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -18,6 +19,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.design.widget.Snackbar;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
@@ -25,15 +28,21 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.asbozh.softuni.finalproject.R;
+import com.asbozh.softuni.finalproject.database.Category;
+import com.asbozh.softuni.finalproject.database.Finances;
+import com.asbozh.softuni.finalproject.database.Record;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -42,6 +51,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -60,16 +70,23 @@ public class AddEntryActivity extends AppCompatActivity implements View.OnClickL
     final Calendar myCalendar = Calendar.getInstance();
     DatePickerDialog.OnDateSetListener date;
 
+    SharedPreferences sharedPreferences;
+
     LocationManager mLocationManager;
 
     Toolbar mToolbar;
     String entryType = "unknown";
     TextView tvDateEntry;
-    EditText etLocation;
+    EditText etAmount, etTitle, etMoreDetails, etLocation;
+    TextInputLayout tilAmount, tilTitle;
+    Spinner spinnerCat;
     ImageButton ibCalendarPicker;
     ImageView ivEntryPic;
     Button btnAdd, btnCancel, btnCapture, btnChoose;
     CheckBox cbLocation;
+
+    private List<Finances> mFinancesList;
+    private List<Category> mCategoryList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,13 +94,27 @@ public class AddEntryActivity extends AppCompatActivity implements View.OnClickL
         setContentView(R.layout.activity_add_entry);
         initToolbar();
         entryType = getIntent().getStringExtra("TYPE_KEY");
-        if (entryType.equalsIgnoreCase("INCOME")) {
-            getSupportActionBar().setTitle(R.string.add_income_entry);
-        } else if (entryType.equalsIgnoreCase("EXPENSE")) {
-            getSupportActionBar().setTitle(R.string.add_expense_entry);
-        }
-
         setViews();
+        setCatSpinner();
+
+
+    }
+
+    private void setCatSpinner() {
+        ArrayList<String> categoryArray = new ArrayList<>();
+        if (entryType.equalsIgnoreCase("INCOME")) {
+            mFinancesList = Finances.listAll(Finances.class);
+            mCategoryList = mFinancesList.get(0).getAllCategories(); // get only income categories
+        } else if (entryType.equalsIgnoreCase("EXPENSE")) {
+            mFinancesList = Finances.listAll(Finances.class);
+            mCategoryList = mFinancesList.get(1).getAllCategories(); // get only expense categories
+        }
+        for (int i = 0; i < mCategoryList.size(); i++) {
+            categoryArray.add(mCategoryList.get(i).getCategoryName());
+        }
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
+                android.R.layout.simple_spinner_dropdown_item, categoryArray);
+        spinnerCat.setAdapter(adapter);
     }
 
     @Override
@@ -103,6 +134,18 @@ public class AddEntryActivity extends AppCompatActivity implements View.OnClickL
 
         };
         updateDateEntry();
+        if (entryType.equalsIgnoreCase("INCOME")) {
+            getSupportActionBar().setTitle(R.string.add_income_entry);
+            updateTitle(getString(R.string.from));
+        } else if (entryType.equalsIgnoreCase("EXPENSE")) {
+            getSupportActionBar().setTitle(R.string.add_expense_entry);
+            updateTitle(getString(R.string.for_expense));
+        }
+
+    }
+
+    private void updateTitle(String string) {
+        etTitle.setText(entryType + " " + string + " " + spinnerCat.getSelectedItem().toString() + " " + getString(R.string.on) + " " + tvDateEntry.getText());
     }
 
     private void updateDateEntry() {
@@ -128,6 +171,12 @@ public class AddEntryActivity extends AppCompatActivity implements View.OnClickL
         btnChoose.setOnClickListener(this);
         cbLocation = (CheckBox) findViewById(R.id.cbLocation);
         cbLocation.setOnClickListener(this);
+        etTitle = (EditText) findViewById(R.id.etEntryTitle);
+        etAmount = (EditText) findViewById(R.id.etAmount);
+        etMoreDetails = (EditText) findViewById(R.id.etEntryDetails);
+        spinnerCat = (Spinner) findViewById(R.id.spinnerCat);
+        tilAmount = (TextInputLayout) findViewById(R.id.input_amount);
+        tilTitle = (TextInputLayout) findViewById(R.id.input_title);
     }
 
     private void initToolbar() {
@@ -156,7 +205,11 @@ public class AddEntryActivity extends AppCompatActivity implements View.OnClickL
                         myCalendar.get(Calendar.DAY_OF_MONTH)).show();
                 break;
             case R.id.bAddEntry:
-
+                if (isUserInputValid()) {
+                    saveRecord();
+                    Toast.makeText(this, getText(R.string.entry_added), Toast.LENGTH_LONG).show();
+                    finish();
+                }
                 break;
             case R.id.bCancelEntry:
                 deleteTempPic();
@@ -190,9 +243,54 @@ public class AddEntryActivity extends AppCompatActivity implements View.OnClickL
                 } else {
                     etLocation.setVisibility(View.INVISIBLE);
                 }
-
                 break;
         }
+    }
+
+    private void saveRecord() {
+        Category category = null;
+        for (int i = 0; i < mCategoryList.size(); i++) {
+            if (mCategoryList.get(i).getCategoryName().equalsIgnoreCase(spinnerCat.getSelectedItem().toString())) {
+                category = mCategoryList.get(i);
+            }
+        }
+
+        // Add Amount to the Category
+        double categoryPrice = Double.valueOf(category.getCategoryTotalPrice());
+        categoryPrice += Double.valueOf(etAmount.getText().toString());
+        category.setCategoryTotalPrice(String.valueOf(categoryPrice));
+        category.save();
+
+        Record newRecord = new Record(category, etTitle.getText().toString(), etMoreDetails.getText().toString(), etAmount.getText().toString(), tvDateEntry.getText().toString(),
+                etLocation.getText().toString(), mCurrentPhotoPath);
+        newRecord.save();
+
+        String myFormat = "dd/MM/yyyy";
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.ENGLISH);
+        String lastEntryDate = sdf.format(myCalendar.getTime());
+        sharedPreferences = getApplicationContext().getSharedPreferences("MyPrefs",
+                Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("last_entry", lastEntryDate);
+        editor.apply();
+    }
+
+    private boolean isUserInputValid() {
+        if (etAmount.getText().toString().trim().isEmpty() || etAmount.getText().toString().trim().equals(".") || etAmount.getText().toString().trim().startsWith(".")) {
+            tilAmount.setErrorEnabled(true);
+            tilAmount.setError(getString(R.string.err_msg_amount));
+            return false;
+        } else {
+            tilAmount.setErrorEnabled(false);
+        }
+        if (etTitle.getText().toString().trim().isEmpty()) {
+            tilTitle.setErrorEnabled(true);
+            tilTitle.setError(getString(R.string.err_msg_title));
+            return false;
+        } else {
+            tilTitle.setErrorEnabled(false);
+        }
+        return true;
     }
 
     private boolean isLocationPermissionGranted() {
@@ -410,5 +508,11 @@ public class AddEntryActivity extends AppCompatActivity implements View.OnClickL
             cbLocation.setChecked(false);
             etLocation.setVisibility(View.INVISIBLE);
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        deleteTempPic();
     }
 }

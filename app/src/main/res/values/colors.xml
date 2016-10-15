@@ -10,6 +10,11 @@
     <color name="icons">#FFFFFF</color>
     <color name="divider">#BDBDBD</color>
 
+    <color name="first">#1e88e5</color>
+    <color name="second">#00c853</color>
+    <color name="third">#e53935</color>
+    <color name="forth">#ffc107</color>
+
     <color name="drawer_item_text_default">@color/primary</color>
     <color name="drawer_item_text_checked">@color/accent</color>
 </resources>

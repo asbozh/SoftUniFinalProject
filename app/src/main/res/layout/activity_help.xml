@@ -8,11 +8,24 @@
         android:id="@+id/tool_bar"
         layout="@layout/tool_bar" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+    <LinearLayout
+        android:layout_centerInParent="true"
         android:gravity="center"
-        android:text="Help Activity"
-        android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Button
+            android:id="@+id/bStartService"
+            android:text="@string/start_service"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/bStopService"
+            android:text="@string/stop_service"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
 
 </RelativeLayout>

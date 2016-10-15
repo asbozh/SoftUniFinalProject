@@ -19,7 +19,7 @@
     <string name="fab_menu_income">Income</string>
     <string name="add_income_entry">Add Income Entry</string>
     <string name="add_expense_entry">Add Expense Entry</string>
-    <string name="add_label_amount">Amount</string>
+    <string name="add_label_amount">Amount in </string>
     <string name="add_label_date">Date</string>
     <string name="add_label_category">Category</string>
     <string name="add_label_title">Title</string>
@@ -34,5 +34,21 @@
     <string name="tab_all_label">ALL</string>
     <string name="tab_income_label">INCOME</string>
     <string name="tab_expenses_label">EXPENSES</string>
+    <string name="label_picture">Picture</string>
+    <string name="from">from</string>
+    <string name="on">on</string>
+    <string name="for_expense">for</string>
+    <string name="err_msg_title">The title cannot be empty</string>
+    <string name="err_msg_amount">The Amount value is invalid</string>
+    <string name="view_label_amount">Amount</string>
+    <string name="entry_added">The new entry is added!</string>
+    <string name="delete_title">Delete</string>
+    <string name="delete_body">Delete selected record?</string>
+    <string name="alert_yes">Yes</string>
+    <string name="alert_no">No</string>
+    <string name="start_service">Start Service</string>
+    <string name="stop_service">Stop Service</string>
+    <string name="notification_body">Have you updated your finances today?</string>
+    <string name="cardview_header">Total Finances</string>
 
 </resources>

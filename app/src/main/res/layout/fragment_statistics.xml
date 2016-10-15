@@ -1,13 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
+    <com.github.mikephil.charting.charts.PieChart
+        android:id="@+id/chart"
+        android:layout_above="@+id/llBottom"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="Statistics"
-        android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
+        android:layout_height="match_parent" />
 
-</LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llBottom"
+        android:elevation="4dp"
+        android:weightSum="100"
+        android:background="@color/accent"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/bStatisticsIncome"
+            android:text="@string/tab_income_label"
+            android:layout_weight="50"
+            android:layout_width="0dp"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/bStatisticsExpense"
+            android:text="@string/tab_expenses_label"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_weight="50"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+</RelativeLayout>

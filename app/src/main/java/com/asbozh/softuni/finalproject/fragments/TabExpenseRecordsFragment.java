@@ -1,5 +1,8 @@
 package com.asbozh.softuni.finalproject.fragments;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -10,7 +13,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.asbozh.softuni.finalproject.R;
+import com.asbozh.softuni.finalproject.activities.ViewEntryActivity;
 import com.asbozh.softuni.finalproject.adapters.RVAdapter;
+import com.asbozh.softuni.finalproject.adapters.RVItemClickListener;
 import com.asbozh.softuni.finalproject.adapters.RVItemDecorationDivider;
 import com.asbozh.softuni.finalproject.database.Category;
 import com.asbozh.softuni.finalproject.database.Finances;
@@ -51,6 +56,52 @@ public class TabExpenseRecordsFragment extends Fragment {
 
         mAdapter = new RVAdapter(myDataSet, "BGN");
         mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.addOnItemTouchListener(
+                new RVItemClickListener(getContext(), mRecyclerView ,new RVItemClickListener.OnItemClickListener() {
+                    @Override public void onItemClick(View view, int position) {
+                        Intent viewEntryIntent = new Intent(getActivity(), ViewEntryActivity.class);
+                        Record selectedRecord = myDataSet.get(position);
+                        viewEntryIntent.putExtra("ENTRY", selectedRecord);
+                        startActivity(viewEntryIntent);
+                    }
+
+                    @Override public void onLongItemClick(View view, final int position) {
+                        AlertDialog.Builder adBuilder = new AlertDialog.Builder(getContext());
+                        adBuilder.setTitle(getString(R.string.delete_title));
+                        adBuilder.setMessage(getString(R.string.delete_body));
+                        adBuilder.setPositiveButton(getString(R.string.alert_yes), new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Record selectedRecord = myDataSet.get(position);
+                                Category category = null;
+                                for (int i = 0; i < mCategoryList.size(); i++) {
+                                    if (mCategoryList.get(i).getCategoryName().equalsIgnoreCase(selectedRecord.getCategory())) {
+                                        category = mCategoryList.get(i);
+                                    }
+                                }
+
+                                // Remove Amount from the Category
+                                double categoryPrice = Double.valueOf(category.getCategoryTotalPrice());
+                                categoryPrice -= Double.valueOf(selectedRecord.getAmount());
+                                category.setCategoryTotalPrice(String.valueOf(categoryPrice));
+                                category.save();
+
+                                selectedRecord.delete();
+                                myDataSet.remove(position);
+                                mAdapter.notifyDataSetChanged();
+                            }
+                        });
+                        adBuilder.setNegativeButton(getString(R.string.alert_no), new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
+                            }
+                        });
+                        AlertDialog alertDialog = adBuilder.create();
+                        alertDialog.show();
+                    }
+                })
+        );
         return rootView;
     }
 

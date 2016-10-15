@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <uses-feature android:name="android.hardware.location.gps" />
 
@@ -36,6 +37,16 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activities.MainActivity" />
         </activity>
+
+        <activity
+            android:name=".activities.ViewEntryActivity"
+            android:parentActivityName=".activities.AllRecordsActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.AllRecordsActivity" />
+        </activity>
+
+        <activity android:name=".activities.ViewPic" />
 
         <activity
             android:name=".activities.AddEntryActivity"
@@ -81,6 +92,11 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
+        <service android:name=".service.NotificationService"
+            android:exported="false"
+            android:enabled="true" />
+
+        <receiver android:name=".service.AlarmReceiver"/>
     </application>
 
 </manifest>

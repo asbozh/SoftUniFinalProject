@@ -68,6 +68,9 @@ public class Record extends SugarRecord implements Parcelable {
     }
 
     public String getLocation() {
+        if (location.equalsIgnoreCase("")) {
+            return "N/A";
+        }
         return location;
     }
 

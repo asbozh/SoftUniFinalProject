@@ -95,7 +95,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="Total Finances"
+                android:text="@string/cardview_header"
                 android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
             <TextView
                 android:id="@+id/tvIncomeTotalCard"
@@ -128,7 +128,7 @@
             <TextView
                 android:id="@+id/tvDateTotalCard"
                 android:layout_below="@+id/tvEntriesTotalCard"
-                android:text="Last Entry Date: 09/10/2016"
+                android:text="Last Entry Date: N/A"
                 android:layout_marginTop="6dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
