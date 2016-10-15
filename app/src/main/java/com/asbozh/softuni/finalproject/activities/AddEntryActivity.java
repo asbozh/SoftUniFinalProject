@@ -9,6 +9,7 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -18,6 +19,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.PersistableBundle;
 import android.provider.MediaStore;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
@@ -84,6 +86,8 @@ public class AddEntryActivity extends AppCompatActivity implements View.OnClickL
     ImageView ivEntryPic;
     Button btnAdd, btnCancel, btnCapture, btnChoose;
     CheckBox cbLocation;
+    Bitmap bitmap;
+
 
     private List<Finances> mFinancesList;
     private List<Category> mCategoryList;
@@ -96,7 +100,10 @@ public class AddEntryActivity extends AppCompatActivity implements View.OnClickL
         entryType = getIntent().getStringExtra("TYPE_KEY");
         setViews();
         setCatSpinner();
-
+        if(savedInstanceState != null) {
+            Bitmap bitmap = savedInstanceState.getParcelable("image");
+            ivEntryPic.setImageBitmap(bitmap);
+        }
 
     }
 
@@ -471,7 +478,7 @@ public class AddEntryActivity extends AppCompatActivity implements View.OnClickL
         bmOptions.inJustDecodeBounds = false;
         bmOptions.inSampleSize = scaleFactor;
 
-        Bitmap bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
+        bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
         ivEntryPic.setImageBitmap(bitmap);
     }
 
@@ -508,6 +515,12 @@ public class AddEntryActivity extends AppCompatActivity implements View.OnClickL
             cbLocation.setChecked(false);
             etLocation.setVisibility(View.INVISIBLE);
         }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putParcelable("image", bitmap);
+        super.onSaveInstanceState(outState);
     }
 
     @Override

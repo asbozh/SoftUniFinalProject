@@ -56,13 +56,17 @@ public class StatisticsFragment extends Fragment implements View.OnClickListener
             List<PieEntry> entries = new ArrayList<>();
 
             cat1 /= totalPrice;
-            entries.add(new PieEntry(cat1 * 100, mCategoryList.get(0).getCategoryName()));
+            if (cat1 != 0)
+                entries.add(new PieEntry(cat1 * 100, mCategoryList.get(0).getCategoryName()));
             cat2 /= totalPrice;
-            entries.add(new PieEntry(cat2 * 100, mCategoryList.get(1).getCategoryName()));
+            if (cat2 != 0)
+                entries.add(new PieEntry(cat2 * 100, mCategoryList.get(1).getCategoryName()));
             cat3 /= totalPrice;
-            entries.add(new PieEntry(cat3 * 100, mCategoryList.get(2).getCategoryName()));
+            if (cat3 != 0)
+                entries.add(new PieEntry(cat3 * 100, mCategoryList.get(2).getCategoryName()));
             cat4 /= totalPrice;
-            entries.add(new PieEntry(cat4 * 100, mCategoryList.get(3).getCategoryName()));
+            if (cat4 != 0)
+                entries.add(new PieEntry(cat4 * 100, mCategoryList.get(3).getCategoryName()));
 
             PieDataSet set = new PieDataSet(entries, "Income Results");
             set.setColors(new int[]{ContextCompat.getColor(getActivity(), R.color.first),
@@ -87,13 +91,17 @@ public class StatisticsFragment extends Fragment implements View.OnClickListener
             List<PieEntry> entries = new ArrayList<>();
 
             category1 /= totalAmount;
-            entries.add(new PieEntry(category1 * 100, mCategoryList.get(0).getCategoryName()));
+            if (category1 != 0)
+                entries.add(new PieEntry(category1 * 100, mCategoryList.get(0).getCategoryName()));
             category2 /= totalAmount;
-            entries.add(new PieEntry(category2 * 100, mCategoryList.get(1).getCategoryName()));
+            if (category2 != 0)
+                entries.add(new PieEntry(category2 * 100, mCategoryList.get(1).getCategoryName()));
             category3 /= totalAmount;
-            entries.add(new PieEntry(category3 * 100, mCategoryList.get(2).getCategoryName()));
+            if (category3 != 0)
+                entries.add(new PieEntry(category3 * 100, mCategoryList.get(2).getCategoryName()));
             category4 /= totalAmount;
-            entries.add(new PieEntry(category4 * 100, mCategoryList.get(3).getCategoryName()));
+            if (category4 != 0)
+                entries.add(new PieEntry(category4 * 100, mCategoryList.get(3).getCategoryName()));
 
             PieDataSet  set = new PieDataSet(entries, "Expense Results");
             set.setColors(new int[]{ContextCompat.getColor(getActivity(), R.color.first),
